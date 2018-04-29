@@ -18,7 +18,7 @@ export default {
   },
   created () {
     this.$bus.$on('checkout-after-personalDetails', (receivedData) => {
-      if (!this.isFilled) {
+      if (!this.isFilled && !this.downloadableCart) {
         this.$store.dispatch('checkout/updatePropValue', ['firstName', receivedData.firstName])
         this.$store.dispatch('checkout/updatePropValue', ['lastName', receivedData.lastName])
       }
@@ -51,7 +51,8 @@ export default {
       currentUser: state => state.user.current
     }),
     ...mapGetters({
-      shippingMethods: 'shipping/shippingMethods'
+      shippingMethods: 'shipping/shippingMethods',
+      downloadableCart: 'cart/isDownloadable'
     })
   },
   mounted () {

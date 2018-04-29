@@ -32,28 +32,6 @@
         "addressInformation": {
 
             "properties": {
-                "shippingAddress": {
-                    "required": [ "street", "city", "postcode", "firstname", "lastname" ],
-                    "properties": {
-                        "region": { "type": "string" },
-                        "region_id": { "type": "number" },
-                        "country_id": { "type": "string", "pattern": "[a-zA-Z]" },
-                        "street": {
-                            "description": "Street name",
-                            "minItems": 1,
-                            "items": { "minLength": 1, "description": "Street name"}
-                        },
-                        "company": { "type": "string" },
-                        "telephone": { "type": "string" },
-                        "postcode": { "type": "string", "minLength": 3,  "pattern": "[a-zA-Z0-9_]+" },
-                        "city": { "type": "string", "pattern": "[a-zA-Z]+" },
-                        "firstname": { "type": "string", "pattern": "[a-zA-Z]+", "description": "First name" },
-                        "lastname": { "type": "string", "pattern": "[a-zA-Z]+" },
-                        "email": { "type": "string", "pattern": "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" },
-                        "region_code":{ "type": "string" },
-                        "sameAsBilling": { "type": "number"}
-                    }
-                },
                 "billingAddress": {
                     "required": [ "street", "city", "postcode", "firstname", "lastname" ],
                     "properties": {

@@ -32,7 +32,8 @@ export default {
       currentUser: state => state.user.current
     }),
     ...mapGetters({
-      paymentMethods: 'payment/paymentMethods'
+      paymentMethods: 'payment/paymentMethods',
+      downloadableCart: 'cart/isDownloadable'
     })
   },
   created () {

@@ -36,6 +36,7 @@
           <base-checkbox
             class="col-xs-12 mb15"
             id="sendToShippingAddressCheckbox"
+            v-if="!downloadableCart"
             v-model="sendToShippingAddress"
             @click="useShippingAddress"
           >

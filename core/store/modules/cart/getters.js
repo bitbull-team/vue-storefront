@@ -44,5 +44,8 @@ export default {
     return _.sumBy(state.cartItems, (p) => {
       return p.qty
     })
+  },
+  isDownloadable (state) {
+    return state.cartItems.every(item => item.type_id === 'downloadable')
   }
 }

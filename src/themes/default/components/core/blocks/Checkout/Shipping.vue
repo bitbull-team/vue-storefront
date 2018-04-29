@@ -32,7 +32,7 @@
     <div class="row pl20" v-if="isActive">
       <div class="hidden-xs col-sm-2 col-md-1"/>
       <div class="col-xs-11 col-sm-9 col-md-10">
-        <div class="row">
+        <div class="row" v-if="!downloadableCart">
           <base-checkbox
             v-if="currentUser && hasShippingDetails()"
             class="col-xs-12 mb25"
@@ -159,7 +159,7 @@
               <option value="" disabled selected hidden>{{ $t('Country') }} *</option>
               <option v-for="country in countries" :key="country.code" :value="country.code">{{ country.name }}</option>
             </select>
-            <span class="validation-error" v-if="$v.shipping.country.$error && !$v.shipping.country.required">
+            <span class="validation-error" v-if="$v.shipping.country.$error && !$v.shipping.country.requiredUnless">
               {{ $t('Field is required') }}
             </span>
           </div>
@@ -172,7 +172,8 @@
             v-model.trim="shipping.phoneNumber"
             autocomplete="phone-number"
           />
-
+        </div>
+        <div class="row">
           <h4 class="col-xs-12">
             {{ $t('Shipping method') }}
           </h4>
@@ -213,7 +214,7 @@
       <div class="hidden-xs col-sm-2 col-md-1"/>
       <div class="col-xs-12 col-sm-9 col-md-11">
         <div class="row fs16 mb35">
-          <div class="col-xs-12 h4">
+          <div class="col-xs-12 h4" v-if="!downloadableCart">
             <p>
               {{ shipping.firstName }} {{ shipping.lastName }}
             </p>
@@ -231,6 +232,8 @@
               <span class="pr15">{{ shipping.phoneNumber }}</span>
               <tooltip>{{ $t('Phone number may be needed by carrier') }}</tooltip>
             </div>
+          </div>
+          <div class="col-xs-12 h4">
             <div class="col-xs-12">
               <h4>
                 {{ $t('Shipping method') }}
@@ -255,39 +258,47 @@ import ButtonFull from 'theme/components/theme/ButtonFull.vue'
 import Tooltip from 'theme/components/core/Tooltip.vue'
 import BaseCheckbox from '../Form/BaseCheckbox.vue'
 import BaseInput from '../Form/BaseInput.vue'
-import { required, minLength } from 'vuelidate/lib/validators'
+import { minLength, required } from 'vuelidate/lib/validators'
 
 // https://monterail.github.io/vuelidate/#sub-contextified-validators
 
 export default {
-  validations: {
-    shipping: {
-      firstName: {
-        required,
-        minLength: minLength(3)
-      },
-      lastName: {
-        required
-      },
-      country: {
-        required
-      },
-      streetAddress: {
-        required
-      },
-      apartmentNumber: {
-        required
-      },
+  validations () {
+    let validationShipping = {
       shippingMethod: {
         required
-      },
-      zipCode: {
-        required,
-        minLength: minLength(3)
-      },
-      city: {
-        required
       }
+    }
+
+    if (!this.downloadableCart) {
+      validationShipping = Object.assign(validationShipping, {
+        firstName: {
+          required,
+          minLength: minLength(3)
+        },
+        lastName: {
+          required
+        },
+        country: {
+          required
+        },
+        streetAddress: {
+          required
+        },
+        apartmentNumber: {
+          required
+        },
+        zipCode: {
+          required,
+          minLength: minLength(3)
+        },
+        city: {
+          required
+        }
+      })
+    }
+    return {
+      shipping: validationShipping
     }
   },
   components: {

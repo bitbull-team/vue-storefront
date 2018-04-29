@@ -262,6 +262,7 @@ export default {
         user_id: this.$store.state.user.current ? this.$store.state.user.current.id.toString() : (this.userId ? this.userId : ''),
         cart_id: this.$store.state.cart.cartServerToken ? this.$store.state.cart.cartServerToken : '',
         products: this.$store.state.cart.cartItems,
+        isDownloadable: this.$store.getters['cart/isDownloadable'],
         addressInformation: {
           shippingAddress: {
             region: this.shipping.state,
@@ -299,6 +300,10 @@ export default {
           shippingExtraFields: this.shipping.extraFields
         }
       }
+      if (this.order.isDownloadable) {
+        delete this.order.addressInformation.shippingAddress
+      }
+
       return this.order
     },
     placeOrder () {

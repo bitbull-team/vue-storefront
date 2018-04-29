@@ -11,7 +11,9 @@ export default {
    */
   placeOrder ({ commit }, order) {
     const ajv = new Ajv()
-    const validate = ajv.compile(require('./order.schema.json'))
+    const validate = ajv.compile(
+      require(order.isDownloadable ? './downloadable-order.schema.json' : './order.schema.json')
+    )
 
     if (!validate(order)) { // schema validation of upcoming order
       throw new ValidationError(validate.errors)
