@@ -35,7 +35,9 @@
     "build:server": "cross-env NODE_ENV=production webpack --config ./core/build/webpack.prod.server.config.js --progress --hide-modules",
     "build": "rimraf dist && yarn build:client && yarn build:server",
     "unit": "karma start ./test/unit/karma.conf.js --single-run",
-    "lint": "eslint --ext .js,.vue core src"
+    "lint": "eslint --ext .js,.vue core src",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "ajv": "^5.2.2",
@@ -84,7 +86,8 @@
     "vuex-router-sync": "^5.0.0",
     "rimraf": "^2.6.0",
     "vue-carousel": "^0.6.9",
-    "vue-no-ssr": "^0.2.2"    
+    "vue-no-ssr": "^0.2.2",
+    "snyk": "^1.83.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -134,5 +137,6 @@
   "workspaces": [
     "src/extensions/*",
     "src/themes/*"
-  ]
+  ],
+  "snyk": true
 }
